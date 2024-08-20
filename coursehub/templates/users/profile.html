@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Profile</h1>
+{% if user_profile %}
+    <p>{{ user.username }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.first_name }}</p>
+    <p>{{ user.last_name }}</p>
+    <p>{{ user_profile.location }}</p>
+    <p>{{ user_profile.phone_number}}</p>       
+    <p>{{ user_profile.birth_date }}</p>
+    <p>{{ user_profile.gender }}</p>
+{% else %}
+    <p>No profile found</p>
+{% endif %}
+
+{% if user == request.user %}
+    <a href="{% url 'edit-profile' user.id %}" class="btn btn-primary">Edit profile</a>
+{% endif %}
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 
 def home_page(request):
-    pass
+    return render(request, 'courses/home_page.html')
 
 def course_search(request):
     pass
