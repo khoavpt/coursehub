@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: your_root_password
-      MYSQL_DATABASE: todolist
+      MYSQL_DATABASE: coursehub_db
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_password
     healthcheck:
@@ -21,10 +21,12 @@ services:
           "--innodb_initialized"
         ]
       timeout: 30s
+    # command: /bin/bash -c "apt-get update && apt-get install -y default-mysql-client && docker-entrypoint.sh mysqld"
+
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
