@@ -30,6 +30,14 @@ class UserForm(forms.ModelForm):
         }
 
 class UserProfileForm(forms.ModelForm):
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'), 
+    ]
+
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
     class Meta:
         model = UserProfile
         fields = ['profile_pic', 'location', 'phone_number', 'birth_date', 'gender']
@@ -37,5 +45,4 @@ class UserProfileForm(forms.ModelForm):
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
             'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'gender': forms.Select(attrs={'class': 'form-control'}),
         }

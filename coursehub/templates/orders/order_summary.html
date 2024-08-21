@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Order Summary</h1>
+
+    <p>{{ order.course.name }}</p>
+    <p>{{ order.created_at }}</p>
+    <p>{{ order.updated_at }}</p>
+    <p>{{ order.status }}</p>
+    <p>{{ order.payment_method }}</p>
+    <p>{{ order.total_amout }}</p>
+    <p>{{ order.order_number }}</p>
+
+    <a href="{% url 'course-detail' order.course.id %}"><button>Back to Course details</button></a>
+{% endblock %}

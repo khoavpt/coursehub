@@ -2,7 +2,7 @@
     User is authenticated
     {{ user.id}}
     <a href="{% url 'logout-user'%}"><button>Log out</button></a>
-    <a href="{% url 'edit-profile' user.id %}"><button>Edit Profile</button></a>
+    <a href="{% url 'get-profile' user.id %}"><button>View Profile</button></a>
 
 {% else %}
     User is not authenticated

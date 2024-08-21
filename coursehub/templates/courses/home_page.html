@@ -2,4 +2,8 @@
 
 {% block content %}
     <h1>Home Page</h1>
+    <form method="GET" action="{% url 'course-search' %}">
+        <input type="text" name="query" placeholder="Search for courses...">
+        <button type="submit">Search</button>
+    </form>
 {% endblock %}

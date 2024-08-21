@@ -15,7 +15,8 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=False)
-    
+    enrolled_courses = models.ManyToManyField('courses.Course', related_name='enrolled_users', blank=True)
+
 
     def __str__(self):
         return self.user.username

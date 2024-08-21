@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, logout, login
@@ -11,14 +10,16 @@ from .forms import RegisterForm, LoginForm, UserForm, UserProfileForm
 # Create your views here.
 def get_profile(request, user_id):
     if request.method == 'GET':
-        user = User.objects.get(id=user_id)
-        user_profile = UserProfile.objects.get(user=user)
+        user = get_object_or_404(User, id=user_id)
+        user_profile = get_object_or_404(UserProfile, user=user)
         return render(request, 'users/profile.html', {'user': user, 'user_profile': user_profile})
+    else:
+        return HttpResponse('Method not allowed')
 
 def edit_profile(request, user_id):
     if request.method == 'POST':
-        user = User.objects.get(id=user_id)
-        user_profile = UserProfile.objects.get(user=user)
+        user = get_object_or_404(User, id=user_id)
+        user_profile = get_object_or_404(UserProfile, user=user)
         user_form = UserForm(request.POST, instance=user)
         user_profile_form = UserProfileForm(request.POST, instance=user_profile)
         if user_form.is_valid() and user_profile_form.is_valid():
@@ -26,14 +27,19 @@ def edit_profile(request, user_id):
             user_profile_form.save()
             return redirect('get-profile', user_id=user_id)
     else:
-        user = User.objects.get(id=user_id)
-        user_profile = UserProfile.objects.get(user=user)
+        user = get_object_or_404(User, id=user_id)
+        user_profile = get_object_or_404(UserProfile, user=user)
         user_form = UserForm(instance=user)
         user_profile_form = UserProfileForm(instance=user_profile)
     return render(request, 'users/edit_profile.html', {'user_form': user_form, 'user_profile_form': user_profile_form})
 
 def get_enrolled_courses(request, user_id):
-    pass
+    if request.method == 'GET':
+        user = get_object_or_404(User, id=user_id)
+        user_profile = get_object_or_404(UserProfile, user=user)
+        enrolled_courses = user_profile.enrolled_courses.all()
+        return render(request, 'users/enrolled_courses.html', {'user': user, 'enrolled_courses': enrolled_courses})
+    
 
 def login_user(request):
     if request.method == 'POST':

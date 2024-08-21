@@ -15,8 +15,9 @@
     <p>No profile found</p>
 {% endif %}
 
+<a href="{% url 'get-enrolled-courses' user.id %}"><button>View Enrolled Courses</button></a>
 {% if user == request.user %}
-    <a href="{% url 'edit-profile' user.id %}" class="btn btn-primary">Edit profile</a>
+    <a href="{% url 'edit-profile' user.id %}"><button>Edit profile</button></a>
 {% endif %}
 
 {% endblock %}
