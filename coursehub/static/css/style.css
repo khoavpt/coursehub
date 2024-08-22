@@ -58,6 +58,11 @@
 
 /* CSS for home_page */
 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -122,6 +127,7 @@ nav ul li a {
 }
 .btn {
     display: inline-block;
+    background-color: #4a90e2;
     color: #fff;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -131,34 +137,3 @@ nav ul li a {
 .btn:hover {
     background-color: #3a7abd;
 }
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.card-group {
-    margin-left: 20px;
-}
-
-
-/* .slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.slider-btn.left {
-    left: 10px;
-}
-
-.slider-btn.right {
-    right: 10px;
-} */

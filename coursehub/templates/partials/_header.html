@@ -29,20 +29,24 @@
                 <button class="btn btn-outline-success" type="submit" style="flex-shrink: 0;">Tìm kiếm</button>
             </form>
             <div class="ms-lg-4">
-                <a href="#" class="btn btn-outline-success">Đăng nhập</a>
-                <a href="#" class="btn btn-primary">Đăng ký</a>
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{% static 'imgs/avatar.png' %}" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
+                        <strong>{{ user.username }}</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout-user' %}">Logout</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                  <a href="{% url 'login-user' %}" class="btn btn-outline-success">Đăng nhập</a>
+                  <a href="{% url 'register-user' %}" class="btn btn-primary">Đăng ký</a>
+                {% endif %}
             </div>
         </div>        
     </div>
 </nav>
-{% if user.is_authenticated %}
-    User is authenticated
-    {{ user.id}}
-    <a href="{% url 'logout-user'%}"><button>Log out</button></a>
-    <a href="{% url 'get-profile' user.id %}"><button>View Profile</button></a>
-
-{% else %}
-    User is not authenticated
-    <a href="{% url 'login-user' %}"><button>Sign In</button></a>
-    <a href="{% url 'register-user' %}"><button>Register</button></a>
-{% endif %}
