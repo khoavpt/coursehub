@@ -1,0 +1,15 @@
+{% extends "base.html" %}    
+
+{% block content %}
+<h1>Enter order info</h1>
+<h3>{{ course.name }}</h3>
+<p>Price: {{ course.price }}</p>
+
+
+<form action="{% url 'enter-order-info' course.id %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

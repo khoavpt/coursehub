@@ -35,3 +35,14 @@
         </div>        
     </div>
 </nav>
+{% if user.is_authenticated %}
+    User is authenticated
+    {{ user.id}}
+    <a href="{% url 'logout-user'%}"><button>Log out</button></a>
+    <a href="{% url 'get-profile' user.id %}"><button>View Profile</button></a>
+
+{% else %}
+    User is not authenticated
+    <a href="{% url 'login-user' %}"><button>Sign In</button></a>
+    <a href="{% url 'register-user' %}"><button>Register</button></a>
+{% endif %}
