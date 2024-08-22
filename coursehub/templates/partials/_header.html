@@ -1,11 +1,37 @@
-{% if user.is_authenticated %}
-    User is authenticated
-    {{ user.id}}
-    <a href="{% url 'logout-user'%}"><button>Log out</button></a>
-    <a href="{% url 'edit-profile' user.id %}"><button>Edit Profile</button></a>
-
-{% else %}
-    User is not authenticated
-    <a href="{% url 'login-user' %}"><button>Sign In</button></a>
-    <a href="{% url 'register-user' %}"><button>Register</button></a>
-{% endif %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #5c95d6;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'imgs/logo.svg' %}" alt="Logo" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="dropdown">
+                <button data-mdb-button-init
+                  data-mdb-ripple-init data-mdb-dropdown-init class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Thể loại
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            <form class="d-flex flex-fill me-3">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" style="flex-shrink: 0;">Tìm kiếm</button>
+            </form>
+            <div class="ms-lg-4">
+                <a href="#" class="btn btn-outline-success">Đăng nhập</a>
+                <a href="#" class="btn btn-primary">Đăng ký</a>
+            </div>
+        </div>        
+    </div>
+</nav>

@@ -1,14 +1,71 @@
-/* body {
-    color: var(--gray-color);
+/* CSS for header */
+
+.navbar-brand {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 90px; 
+    height: 60px; 
+    overflow: hidden; 
+    flex-shrink: 0;
 }
+
+.navbar-brand img {
+    margin-left: 10px;
+    max-width: 80px;
+    max-height: 70px;
+    object-fit: contain; 
+    transform: scale(1.2);
+}
+
+.dropdown {
+    margin-right: 20px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar .d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: #fff; 
+}
+
+.navbar-toggler {
+    border-color: #fff; /* Màu viền nút toggle */
+}
+
+.btn-outline-success {
+    color: #fff; /* Màu chữ nút */
+    border-color: #fff; /* Màu viền nút */
+}
+
+.btn-outline-success:hover {
+    background-color: #fff; /* Màu nền khi hover */
+    color: #5c95d6; /* Màu chữ khi hover */
+} 
+
+.btn-primary {
+    margin-left: 16px;
+    background-color: #0252bb;
+}
+
+
+/* CSS for home_page */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 header {
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #4a90e2;
+    color: #fff;
     padding: 1rem 0;
 }
 nav ul {
@@ -16,17 +73,6 @@ nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo   {
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-.logo-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
 }
 nav ul li a {
     color: #fff;
@@ -76,7 +122,6 @@ nav ul li a {
 }
 .btn {
     display: inline-block;
-    background-color: #4a90e2;
     color: #fff;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -91,17 +136,29 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem 0;
+}
+
+.card-group {
+    margin-left: 20px;
+}
+
+
+/* .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.slider-btn.left {
+    left: 10px;
+}
+
+.slider-btn.right {
+    right: 10px;
 } */
-
-.header {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    padding: 1rem 0;
-}
-
-.header__nav-list {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}

@@ -7,7 +7,7 @@
     --dark-color: #333;
 }
 
-* {
+/* * {
     box-sizing: inherit;
 }
 
@@ -32,6 +32,6 @@ html {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -1rem;
-}
+} */
 
 
