@@ -6,4 +6,15 @@
         <input type="text" name="query" placeholder="Search for courses...">
         <button type="submit">Search</button>
     </form>
+
+    <h2>Recommendations</h2>
+    {% for course in recommended_courses %}
+        <h3>{{ course.name }}</h3>
+        <p>{{ course.description }}</p>
+        <p>Institution: {{ course.institution}}</p>
+        <p>URL: <a href="{{ course.course_url }}">{{ course.course_url }}</a></p>
+        <p>Price: {{ course.price }}</p>
+        <a href="{% url 'course-detail' course.id %}"><button>View Details</button></a>
+        <hr>
+    {% endfor %}
 {% endblock %}

@@ -21,12 +21,11 @@ services:
           "--innodb_initialized"
         ]
       timeout: 30s
-    # command: /bin/bash -c "apt-get update && apt-get install -y default-mysql-client && docker-entrypoint.sh mysqld"
-
 
   web:
     build: .
-    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py load_courses && python manage.py load_users && python manage.py load_reviews && python manage.py runserver 0.0.0.0:8000"
+    entrypoint: ["/app/entrypoint.sh"]
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
