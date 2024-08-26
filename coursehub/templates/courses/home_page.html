@@ -2,21 +2,229 @@
 
 {% load static %}
 
-{% block content %}
-    <h1>Home Page</h1>
-    <form method="GET" action="{% url 'course-search' %}">
-        <input type="text" name="query" placeholder="Search for courses...">
-        <button type="submit">Search</button>
-    </form>
+{% block extra_css %}
 
-    <h2>Recommendations</h2>
-    {% for course in recommended_courses %}
-        <h3>{{ course.name }}</h3>
-        <p>{{ course.description }}</p>
-        <p>Institution: {{ course.institution}}</p>
-        <p>URL: <a href="{{ course.course_url }}">{{ course.course_url }}</a></p>
-        <p>Price: {{ course.price }}</p>
-        <a href="{% url 'course-detail' course.id %}"><button>View Details</button></a>
-        <hr>
-    {% endfor %}
+<style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        background-color: #5c95d6;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      border-radius: 10px;
+      height: 360px;
+
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content:start;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    .swiper-wrapper {
+        position: relative;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        color: #5c95d6;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        position: absolute;
+        top: 50%; /* Căn giữa theo chiều dọc */
+        transform: translateY(-50%); /* Dịch chuyển chính giữa theo trục Y */
+    }
+
+    .swiper-button-next {
+        right: 10px; /* Cách mép phải của `swiper-wrapper` */
+    }
+
+    .swiper-button-prev {
+        left: 10px; /* Cách mép trái của `swiper-wrapper` */
+    }
+
+    .rcm-courses {
+        background-color: #5c95d6;
+        padding: 20px;
+        padding-top: 0px;
+    }
+
+  </style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column justify-content-center align-items-center overflow-hidden p-3 p-md-5 text-center" id="cover">
+    <div class="col-12 col-md-5 p-lg-5 my-5" style="width: 100%;">
+        <h1 class="display-4 fw-bold">Khám phá những khóa học chất lượng</h1>
+        <p class="lead fw-normal">Nâng cao kỹ năng của bạn với các khóa học trực tuyến từ các chuyên gia hàng đầu</p>
+        <a href="#" class="btn btn-outline-success">Xem khóa học</a>
+    </div>
+  </div>
+
+<section class="rcm-courses">
+    <div class="swiper-container mySwiper">
+        <h1 class="display-4 fw-bold text-center text-white", style="padding: 20px;">Các khóa học đề xuất</h1>
+        
+        <div class="swiper-wrapper">
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+            <div class="course-card swiper-slide">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+
+                <div class="course-info">
+                    <h2 class = "course-name">{{ course.name }}</h2>
+                    <p class="institution">Institution: {{ course.institution}}</p>
+                    <p class="price">Price: {{ course.price }}</p>
+        
+                    <a href="#" class="btn btn-outline-success">View More</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+
+    {% block extra_js %}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 5,
+            spaceBetween: 10,
+            loop: true,
+            centerSlide: 'true',
+            fade: 'true',
+            grabCursor: 'true',
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+            },
+            navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            },
+            breakpoints:{
+                0: {
+                    slidesPerView: 2,
+                },
+                520: {
+                    slidesPerView: 3,
+                },
+                950: {
+                    slidesPerView: 5,
+                },
+            },
+        });
+    </script>
+    {% endblock %}
+
 {% endblock %}

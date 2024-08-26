@@ -1,19 +1,133 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block extra_css %}
+<style>
+
+html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: 420px;
+      padding-top: 10px;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      border-radius: 10px;
+
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content:start;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+  </style>
+{% endblock %}
+
+
 {% block content %}
-    <h1>Course Search</h1>
-    <form method="GET" action="{% url 'course-search' %}">
-        <input type="text" name="query" placeholder="Search for courses...">
-        <button type="submit">Search</button>
-    </form>
     {% for course in courses %}
-        <h3>{{ course.name }}</h3>
-        <p>{{ course.description }}</p>
-        <p>Institution: {{ course.institution}}</p>
-        <p>URL: <a href="{{ course.course_url }}">{{ course.course_url }}</a></p>
-        <p>Price: {{ course.price }}</p>
-        <a href="{% url 'course-detail' course.id %}"><button>View Details</button></a>
-        <hr>
+
+    <div class="swiper-wrapper">
+                
+        <div class="course-card swiper-slide">
+            <!-- <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img"> -->
+
+            <div class="course-info">
+                <h2 class = "course-name">{{ course.name }}</h2>
+                <p class="institution">Institution: {{ course.institution}}</p>
+                <p class="price">Price: {{ course.price }}</p>
+    
+                <a href="{% url 'course-detail' course.id %}" class="btn btn-outline-success">View More</a>
+            </div>
+        </div>
+        
+
+    </div>
     {% endfor %}
 
+      <!-- <section class="rcm-courses">
+        <div class="swiper-container mySwiper">
+            <div class="swiper-wrapper">
+                
+                <div class="course-card swiper-slide">
+                    <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+    
+                    <div class="course-info">
+                        <h2 class = "course-name">{{ course.name }}</h2>
+                        <p class="institution">Institution: {{ course.institution}}</p>
+                        <p class="price">Price: {{ course.price }}</p>
+            
+                        <a href="#" class="btn btn-outline-success">View More</a>
+                    </div>
+                </div>
+                
+    
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+    </section> -->
+
+    {% block extra_js %}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".courses-swiper", {
+            slidesPerView: 5,
+            spaceBetween: 25,
+            loop: true,
+            centerSlide: 'true',
+            fade: 'true',
+            grabCursor: 'true',
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+            },
+            navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            },
+            breakpoints:{
+                0: {
+                    slidesPerView: 1,
+                },
+                520: {
+                    slidesPerView: 3,
+                },
+                950: {
+                    slidesPerView: 5,
+                }
+            },
+        });
+    </script>
+    {% endblock %}
+    
+
 {% endblock %}
+
