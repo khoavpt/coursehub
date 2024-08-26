@@ -3,3 +3,4 @@ mysqlclient
 Pillow
 stripe
 pandas
+torch==2.3.1

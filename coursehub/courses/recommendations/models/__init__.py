@@ -1,0 +1,4 @@
+from .recommender_system import RecommenderSystem
+from .non_personalized_rs import NonPersonalizedRecommenderSystem
+from .item_regression_rs import ItemBasedRegressionRecommenderSystem1
+from .memory_based_rs import MemoryBasedRecommenderSystem
