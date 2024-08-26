@@ -1,7 +1,59 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+.img-account-profile {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+}
+
+.card {
+    margin-bottom: 20px;
+    -webkit-box-shadow: 0 2px 3px #eaedf2;
+    box-shadow: 0 2px 3px #eaedf2;
+}
+
+.pb-0 {
+    padding-bottom: 0!important;
+}
+
+.font-size-16 {
+    font-size: 16px!important;
+}
+
+.rounded-circle {
+    border-radius: 50%!important;
+}
+
+.nav-borders .nav-link.active {
+color: #0061f2;
+border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+/* Add this CSS rule */
+.course-image {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-    <h1>Enrolled Course</h1>
+    <!-- <h1>Enrolled Course</h1>
 
     {% for course in enrolled_courses %}
         <h3>{{ course.name }}</h3>
@@ -11,5 +63,116 @@
         <p>Price: {{ course.price }}</p>
         <a href="{% url 'course-detail' course.id %}"><button>View Details</button></a>
         <hr>
-    {% endfor %}
+    {% endfor %} -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div id="history-page">
+    <div class="container-xl p-4" >
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
+            <a class="nav-link " href="{% url 'get-profile' user.id %}" target="__blank">Informations</a>
+            <a class="nav-link active ms-0" href="{% url 'get-enrolled-courses' user.id %}?" target="__blank">History</a>
+        </nav>
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ user.userprofile.profile_pic.url }}" alt="">
+                        <!-- Profile picture help block-->
+                        <hr>
+                        <div>
+                            <h4 class="card-title mb-2">Biography</h4>
+                            <p class="mb-0 text-muted">Hi I'm Jansh,has been the industry's standard
+                                dummy text To an English person alteration text.</p>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-md-12">
+                                <div>
+                                    <p class="text-muted mb-2 fw-medium"><i class="mdi mdi-email-outline me-2"></i>{{ user.email }}
+                                    </p>
+                                    <p class="text-muted fw-medium mb-0"><i class="mdi mdi-phone-in-talk-outline me-2"></i>{{ user.userprofile.phone_number }}
+                                    </p>
+                                </div>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card">
+                    <div class="tab-content p-4">
+                        <div class="tab-pane active show" id="projects-tab" role="tabpanel">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1">
+                                    <h4 class="card-title mb-4">Enrolled Courses</h4>
+                                </div>
+                            </div>
+                            <div class="row" id="all-projects">
+                                {% for course in enrolled_courses %}
+                                <div class="col-md-6" id="project-items-{{ forloop.counter }}">
+                                    <div class="card card-hover">
+                                        <div class="card-body">
+                                            <div class="d-flex mb-3">
+                                                <div class="flex-grow-1 align-items-start">
+                                                    <div>
+                                                        <h6 class="mb-0 text-muted">
+                                                            <i class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
+
+                                                            <span class="team-date">{{ course.level }}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown ms-2">
+                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="mdi mdi-dots-horizontal"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <form action="{% url 'course-detail' course.id %}" class="dropdown-item" method="post">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-outline-primary" style="width: 100%;">See details</button>
+                                                        </form>
+    
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item">
+                                                            <button class="btn btn-outline-danger" style="width: 100%;">Delete</button>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                                            <div class="row d-flex align-items-center">
+                                                <div class="row justify-content-center">
+                                                    <img src="{{ course.image_url }}" alt="" class="avatar-lg course-image my-1">
+                                                    <hr style="width: 80%;">
+
+                                                </div>
+                                                <div class="row text-center">
+                                                    <form action="{% url 'course-detail' course.id %}" method="post">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-link p-0 task-button" style="background: none; border: none; padding: 0; margin: 0; text-decoration: none; color: inherit; text-align: left;">
+                                                            <h4 class="mb-1 font-size-17 team-title">{{ course.name|truncatechars:50 }}</h4>
+                                                        </button>
+                                                    </form>
+                                                    <p class="text-muted mb-0 team-description">{{course.description|safe|truncatechars:80}}</p>
+                                                </div>
+                                            </div>
+                                        </div><!-- end cardbody -->
+                                    </div><!-- end card -->
+                                </div><!-- end col -->
+                                {% endfor %}
+                            </div>
+                        </div><!-- end tab pane -->
+                    </div>
+                </div><!-- end card -->
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

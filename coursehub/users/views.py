@@ -12,7 +12,22 @@ def get_profile(request, user_id):
     if request.method == 'GET':
         user = get_object_or_404(User, id=user_id)
         user_profile = get_object_or_404(UserProfile, user=user)
-        return render(request, 'users/profile.html', {'user': user, 'user_profile': user_profile})
+
+        user_form = UserForm(instance=user)
+        user_profile_form = UserProfileForm(instance=user_profile)
+    
+        if request.user != user:
+            for field in user_form.fields.values():
+                field.widget.attrs['disabled'] = 'disabled'
+            for field in user_profile_form.fields.values():
+                field.widget.attrs['disabled'] = 'disabled'
+        
+        context = {
+            'user': user,
+            'user_profile_form': user_profile_form,
+            'user_form': user_form,
+        }
+        return render(request, 'users/profile.html', context=context)
     else:
         return HttpResponse('Method not allowed')
 
