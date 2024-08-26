@@ -1,7 +1,124 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #0056b3;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    color: #0056b3;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card-text {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #003d82;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.star-rating {
+    color: #ffc107;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.star-rating i {
+    transition: color 0.2s ease-in-out;
+}
+
+textarea.form-control:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
+}
+
+.review-item {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.review-author {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.review-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-    <h1>Course Details</h1>
+    <!-- <h1>Course Details</h1>
     <div>
         <h1>{{ course.name }}</h1>
         <p>{{ course.description }}</p>
@@ -44,5 +161,128 @@
         </ul>
         <hr>
         {% endfor %}
+    </div> -->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+
+                
+                <h1>{{ course.name }}</h1>
+                <p class="lead mb-4">{{ course.description }}</p>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Course Information</h5>
+                        <p class="card-text"><i class="fas fa-university me-2"></i>Institution: {{ course.institution }}</p>
+                        <p class="card-text"><i class="fas fa-link me-2"></i>URL: <a href="{{ course.course_url }}" target="_blank">{{ course.course_url }}</a></p>
+                        <p class="card-text"><i class="fas fa-tag me-2"></i>Price: {{ course.price }}</p>
+                        
+                        {% if user.is_authenticated %}
+                            {% if is_enrolled %}
+                                <button class="btn btn-success" disabled>You are enrolled in this course</button>
+                            {% else %}
+                                <form action="{% url 'enter-order-info' course.id %}" method="GET">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Enroll</button>
+                                </form>   
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'login-user' %}" class="btn btn-secondary">Sign In to Enroll</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Add your review</h5>
+                        <form action="{% url 'review-course' course.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <div id="star-rating" class="star-rating">
+                                    <i class="far fa-star" data-rating="1"></i>
+                                    <i class="far fa-star" data-rating="2"></i>
+                                    <i class="far fa-star" data-rating="3"></i>
+                                    <i class="far fa-star" data-rating="4"></i>
+                                    <i class="far fa-star" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" name="rating" id="rating-value">
+                            </div>
+                            <div class="mb-3">
+                                <label for="review_text" class="form-label">Your review</label>
+                                <textarea class="form-control" id="review_text" name="review_text" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit review</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Other reviews</h5>
+                        {% for review in reviews %}
+                            <div class="review-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <a href="{% url 'get-profile' review.user.id %}" class="review-author text-decoration-none">
+                                        {{ review.user.first_name }} {{ review.user.last_name }}
+                                    </a>
+                                    <div class="star-rating">
+                                        {% for i in '12345'|make_list %}
+                                            {% if forloop.counter <= review.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <p class="mb-1">{{ review.review_text }}</p>
+                                <p class="review-date mb-0">{{ review.review_date }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const starRating = document.getElementById('star-rating');
+            const ratingValue = document.getElementById('rating-value');
+
+            starRating.addEventListener('click', function(e) {
+                if (e.target.tagName === 'I') {
+                    const rating = e.target.getAttribute('data-rating');
+                    ratingValue.value = rating;
+                    updateStars(rating);
+                }
+            });
+
+            starRating.addEventListener('mouseover', function(e) {
+                if (e.target.tagName === 'I') {
+                    const rating = e.target.getAttribute('data-rating');
+                    updateStars(rating);
+                }
+            });
+
+            starRating.addEventListener('mouseout', function() {
+                updateStars(ratingValue.value);
+            });
+
+            function updateStars(rating) {
+                const stars = starRating.querySelectorAll('i');
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.replace('far', 'fas');
+                    } else {
+                        star.classList.replace('fas', 'far');
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}
