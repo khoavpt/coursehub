@@ -1,14 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+import stripe
+from django.conf import settings
 
-# Create your models here.
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 class Course(models.Model):
     """
     Represents a course in the system.
 
     This model stores information about courses offered on the platform.
-    It includes details such as the course title, description, instructor,
-    price, and duration.
+    It includes details such as the course title, description, institution,
+    price, and Stripe integration details.
 
     Attributes:
         name (CharField): The title of the course.
@@ -16,16 +20,72 @@ class Course(models.Model):
         institution (CharField): The institution offering the course.
         course_url (URLField): The URL to the course page.
         price (DecimalField): The price of the course.
+        stripe_product_id (CharField): The ID of the corresponding product in Stripe.
+        stripe_price_id (CharField): The ID of the corresponding price in Stripe.
     """
 
     name = models.CharField(max_length=200)
     description = models.TextField()
     institution = models.CharField(max_length=50)
     course_url = models.URLField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    stripe_product_id = models.CharField(max_length=100, blank=True, null=True)
+    stripe_price_id = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
+        """Return a string representation of the course."""
         return self.name
+
+    def save(self, *args, **kwargs):
+        """
+        Override the save method to sync the course with Stripe.
+
+        This method creates or updates the corresponding product and price in Stripe
+        when the course is saved.
+        """
+        if not self.stripe_product_id:
+            # Create a new product in Stripe
+            stripe_product = stripe.Product.create(name=self.name, description=self.description)
+            self.stripe_product_id = stripe_product.id
+
+            # Create a new price for the product in Stripe
+            stripe_price = stripe.Price.create(
+                product=self.stripe_product_id,
+                unit_amount=int(self.price * 100),  # Stripe uses cents
+                currency='usd'
+            )
+            self.stripe_price_id = stripe_price.id
+        else:
+            # Update existing product in Stripe
+            stripe.Product.modify(
+                self.stripe_product_id,
+                name=self.name,
+                description=self.description
+            )
+
+            # Update existing price in Stripe
+            stripe.Price.modify(
+                self.stripe_price_id,
+                active=False
+            )
+            new_price = stripe.Price.create(
+                product=self.stripe_product_id,
+                unit_amount=int(self.price * 100),
+                currency='usd'
+            )
+            self.stripe_price_id = new_price.id
+
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """
+        Override the delete method to handle Stripe product deletion.
+
+        This method deactivates the corresponding product in Stripe when the course is deleted.
+        """
+        if self.stripe_product_id:
+            stripe.Product.modify(self.stripe_product_id, active=False)
+        super().delete(*args, **kwargs)
 
 class Review(models.Model):
     """
