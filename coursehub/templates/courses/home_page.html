@@ -95,8 +95,10 @@
         <h1 class="display-4 fw-bold text-center text-white", style="padding: 20px;">Các khóa học đề xuất</h1>
         
         <div class="swiper-wrapper">
+
+            {% for course in recommended_courses %}
             <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
+                <img src="{{ course.course_url }}" alt="Course image" class="course-img">
 
                 <div class="course-info">
                     <h2 class = "course-name">{{ course.name }}</h2>
@@ -106,83 +108,7 @@
                     <a href="#" class="btn btn-outline-success">View More</a>
                 </div>
             </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
-            <div class="course-card swiper-slide">
-                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera-course-photos/9c/90ae67ecdb4185a4ae79ec9a5ae0b6/Course-Logo--1.png?auto=format%2Ccompress&dpr=1&w=330&h=330&fit=fill&q=25" alt="Course image" class="course-img">
-
-                <div class="course-info">
-                    <h2 class = "course-name">{{ course.name }}</h2>
-                    <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
-        
-                    <a href="#" class="btn btn-outline-success">View More</a>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
         <div class="swiper-button-next"></div>
