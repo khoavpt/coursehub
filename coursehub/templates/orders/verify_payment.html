@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Xác minh thanh toán</h2>
+
+<h3>Thông tin đơn hàng</h3>
+<p>Mã đơn hàng: {{ order.id }}</p>
+<p>Khóa học: {{ order.course.name }}</p>
+<p>Tổng tiền: {{ order.total_amount }}</p>
+<p>Phương thức thanh toán: {{ order.get_payment_method_display }}</p>
+<p>Trạng thái: {{ order.get_status_display }}</p>
+
+{% if error_message %}
+    <div class="alert alert-danger">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+{% if order.payment_method == 'stripe' %}
+    <p>Đang xác minh thanh toán Stripe...</p>
+    <a href="{% url 'process_stripe_payment' order.id %}" class="btn btn-primary">Thử thanh toán lại</a>
+{% elif order.payment_method == 'bank_transfer' %}
+    <p>Thanh toán chuyển khoản đang chờ xác nhận.</p>
+    <p>Vui lòng chuyển khoản theo thông tin sau:</p>
+    <ul>
+        <li>Số tài khoản: XXXXXXXX</li>
+        <li>Tên tài khoản: YYYYYYYY</li>
+        <li>Ngân hàng: ZZZZZZZZ</li>
+        <li>Nội dung chuyển khoản: Thanh toan don hang {{ order.id }}</li>
+    </ul>
+    <p>Sau khi chuyển khoản, vui lòng liên hệ với chúng tôi để xác nhận.</p>
+{% endif %}
+
+<a href="{% url 'get-order-summary' order.id %}" class="btn btn-secondary">Quay lại trang tổng quan đơn hàng</a>
+
+{% endblock %}

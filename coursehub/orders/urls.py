@@ -6,4 +6,5 @@ urlpatterns = [
     path('<int:order_id>/summary/', views.get_order_summary, name='get-order-summary'), # Get order summary  
     path('<int:order_id>/stripe-payment/', views.process_stripe_payment, name='process_stripe_payment'),
     path('<int:order_id>/verify/', views.verify_order_payment, name='verify_order_payment'),  # Verify order payment
+    path('orders/<int:order_id>/verify-payment/', views.verify_order_payment, name='verify-order-payment'),
 ]

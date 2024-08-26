@@ -3,8 +3,7 @@ from .models import Order
 
 PAYMENT_CHOICES = [
     ('stripe', 'Credit Card (Stripe)'),
-    ('paypal', 'PayPal'),
-    ('bank_transfer', 'Bank Transfer')
+    ('bank_transfer', 'Bank Transfer'),
 ]
 
 class OrderForm(forms.ModelForm):

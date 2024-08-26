@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 import stripe
 from django.conf import settings
+from decimal import Decimal
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -37,30 +38,39 @@ class Course(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        """
-        Override the save method to sync the course with Stripe.
+        # Làm sạch và kiểm tra giá
+        try:
+            cleaned_price = Decimal(str(self.price).split('.')[0] + '.' + str(self.price).split('.')[1][:2])
+        except (IndexError, ValueError):
+            raise ValueError(f"Invalid price value: {self.price}")
 
-        This method creates or updates the corresponding product and price in Stripe
-        when the course is saved.
-        """
         if not self.stripe_product_id:
             # Create a new product in Stripe
-            stripe_product = stripe.Product.create(name=self.name, description=self.description)
+            stripe_product_data = {
+                "name": self.name,
+            }
+            if self.description:
+                stripe_product_data["description"] = self.description
+            
+            stripe_product = stripe.Product.create(**stripe_product_data)
             self.stripe_product_id = stripe_product.id
 
             # Create a new price for the product in Stripe
             stripe_price = stripe.Price.create(
                 product=self.stripe_product_id,
-                unit_amount=int(self.price * 100),  # Stripe uses cents
+                unit_amount=int(cleaned_price * 100),  # Stripe uses cents
                 currency='usd'
             )
             self.stripe_price_id = stripe_price.id
         else:
             # Update existing product in Stripe
+            update_data = {"name": self.name}
+            if self.description:
+                update_data["description"] = self.description
+            
             stripe.Product.modify(
                 self.stripe_product_id,
-                name=self.name,
-                description=self.description
+                **update_data
             )
 
             # Update existing price in Stripe
@@ -70,10 +80,13 @@ class Course(models.Model):
             )
             new_price = stripe.Price.create(
                 product=self.stripe_product_id,
-                unit_amount=int(self.price * 100),
+                unit_amount=int(cleaned_price * 100),
                 currency='usd'
             )
             self.stripe_price_id = new_price.id
+
+        # Cập nhật giá đã làm sạch
+        self.price = cleaned_price
 
         super().save(*args, **kwargs)
 

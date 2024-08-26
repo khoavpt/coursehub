@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Order
 from .forms import OrderForm
@@ -56,7 +57,7 @@ def process_stripe_payment(request, order_id):
     order = Order.objects.get(id=order_id)
     return render(request, 'orders/stripe_payment.html', {
         'order': order,
-        'stripe_public_key': settings.STRIPE_TEST_PUBLIC_KEY
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY
     })
 
 @login_required
@@ -90,11 +91,38 @@ def verify_order_payment(request, order_id):
     Returns:
         HttpResponseRedirect: A redirect to the order summary page.
     """
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id)
+    payment_verified = False
+    error_message = None
+
     if order.payment_method == 'stripe':
-        session = stripe.checkout.Session.retrieve(order.stripe_checkout_session_id)
-        if session.payment_status == 'paid':
+        try:
+            session = stripe.checkout.Session.retrieve(order.stripe_checkout_session_id)
+            if session.payment_status == 'paid':
+                order.status = 'completed'
+                order.save()
+                payment_verified = True
+            else:
+                error_message = "Thanh toán chưa hoàn tất. Vui lòng thử lại."
+        except stripe.error.StripeError as e:
+            error_message = f"Lỗi khi xác minh thanh toán Stripe: {str(e)}"
+    elif order.payment_method == 'bank_transfer':
+        # Xử lý xác minh thanh toán chuyển khoản ngân hàng
+        # Ví dụ: Kiểm tra xem admin đã xác nhận thanh toán chưa
+        if order.bank_transfer_confirmed:
             order.status = 'completed'
             order.save()
-    # Handle other payment methods here
-    return redirect('get-order-summary', order_id=order.id)
+            payment_verified = True
+        else:
+            error_message = "Thanh toán chuyển khoản chưa được xác nhận. Vui lòng chờ xác nhận từ admin."
+    else:
+        error_message = "Phương thức thanh toán không hợp lệ."
+
+    if payment_verified:
+        messages.success(request, "Thanh toán đã được xác minh thành công!")
+        return redirect('get-order-summary', order_id=order.id)
+    else:
+        return render(request, 'orders/verify_payment.html', {
+            'order': order,
+            'error_message': error_message
+        })
