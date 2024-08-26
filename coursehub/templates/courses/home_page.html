@@ -31,7 +31,7 @@
       font-size: 18px;
       background: #fff;
       border-radius: 10px;
-      height: 360px;
+      height: 500px;
 
       display: -webkit-box;
       display: -ms-flexbox;
@@ -76,6 +76,10 @@
         padding-top: 0px;
     }
 
+    h2 {
+        font-size: 25px;
+    }
+
   </style>
 
 {% endblock %}
@@ -90,7 +94,7 @@
     </div>
   </div>
 
-<section class="rcm-courses">
+<section class="rcm-courses" style="overflow-x: hidden;">
     <div class="swiper-container mySwiper">
         <h1 class="display-4 fw-bold text-center text-white", style="padding: 20px;">Các khóa học đề xuất</h1>
         
@@ -98,15 +102,19 @@
 
             {% for course in recommended_courses %}
             <div class="course-card swiper-slide">
-                <img src="{{ course.course_url }}" alt="Course image" class="course-img">
+                <img src="{{ course.image_url }}" alt="Course image" class="course-img">
 
                 <div class="course-info">
                     <h2 class = "course-name">{{ course.name }}</h2>
                     <p class="institution">Institution: {{ course.institution}}</p>
-                    <p class="price">Price: {{ course.price }}</p>
+                    <p class="price" style="font-weight: 500;">Price: {{ course.price }}$</p>
         
-                    <a href="#" class="btn btn-outline-success">View More</a>
                 </div>
+
+                <div class="btn-view-more" style="display: flex; flex-direction: column; flex: 1; justify-content: flex-end;">
+                    <a href="{% url 'course-detail' course.id %}" class="btn btn-outline-success" style="margin-bottom: 10px;">View More</a>
+                </div>
+
             </div>
             {% endfor %}
 
@@ -123,7 +131,7 @@
 
     <script>
         var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 5,
+            slidesPerView: 4,
             spaceBetween: 10,
             loop: true,
             centerSlide: 'true',
@@ -146,7 +154,7 @@
                     slidesPerView: 3,
                 },
                 950: {
-                    slidesPerView: 5,
+                    slidesPerView: 4,
                 },
             },
         });
