@@ -1,23 +1,155 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+.img-account-profile {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+}
+
+.card {
+    margin-bottom: 20px;
+    -webkit-box-shadow: 0 2px 3px #eaedf2;
+    box-shadow: 0 2px 3px #eaedf2;
+}
+
+.pb-0 {
+    padding-bottom: 0!important;
+}
+
+.font-size-16 {
+    font-size: 16px!important;
+}
+
+.rounded-circle {
+    border-radius: 50%!important;
+}
+
+.nav-borders .nav-link.active {
+color: #0061f2;
+border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+</style>
+{% endblock %}
+
 {% block content %}
-<h1>Profile</h1>
-{% if user_profile %}
-    <p>{{ user.username }}</p>
-    <p>{{ user.email }}</p>
-    <p>{{ user.first_name }}</p>
-    <p>{{ user.last_name }}</p>
-    <p>{{ user_profile.location }}</p>
-    <p>{{ user_profile.phone_number}}</p>       
-    <p>{{ user_profile.birth_date }}</p>
-    <p>{{ user_profile.gender }}</p>
-{% else %}
-    <p>No profile found</p>
-{% endif %}
+<div id="profile-page">
+    <div class="container-xl px-4 pt-4">
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
+            <a class="nav-link active ms-0" href="{% url 'get-profile' user.id %}" target="__blank">Informations</a>
+            <a class="nav-link " href="{% url 'get-enrolled-courses' user.id %}" target="__blank">Enrolled Courses</a>
+        </nav>
+        <hr class="mt-0 mb-4">
+        <form action="{% url 'edit-profile' user.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xl-4">
+                    <!-- Profile picture card-->
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Profile Picture</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img id="profile_pic_preview" class="img-account-profile rounded-circle mb-2" src="{{ user.userprofile.profile_pic.url }}" alt="">
+                            {{ user.userprofile.profile_pic.url }}
+                            <!-- Profile picture help block-->
+                            {% if request.user.id == user.id %}
+                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                            <!-- Profile picture upload button-->
+                            <label class="btn btn-primary" for="id_profile_pic">Upload new image</label>
+                            <input type="file" name="{{ user_profile_form.profile_pic.name }}" id="id_profile_pic" class="d-none">                    
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Account Details</div>
+                        <div class="card-body">
+                            <form action="{% url 'edit-profile' user.id %}" method="post">
+                                <!-- Form Group (username)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1">Username (how your name will appear to other users on the site)</label>
+                                    {{ user_form.username }}
+                                </div>
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (first name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">First name</label>
+                                        {{ user_form.first_name }}
+                                    </div>
+                                    <!-- Form Group (last name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">Last name</label>
+                                        {{ user_form.last_name }}
+                                    </div>
+                                </div>
+                                <!-- Form Row        -->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputEmailAddress">Location</label>
+                                    {{ user_profile_form.location }}
+                                </div>
+                                <!-- Form Group (email address)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                    {{ user_form.email }}
+                                </div>
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (phone number)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputPhone">Phone number</label>
+                                        {{ user_profile_form.phone_number }}
+                                    </div>
+                                    <!-- Form Group (birthday)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                        {{ user_profile_form.birth_date }}
+                                    </div>
+                                </div>
+                                <!-- Form Group (gender)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputGender">Gender</label>
+                                    {{ user_profile_form.gender }}
+                                </div>
+                                <!-- Save changes button-->
+                                {% if request.user.id == user.id %}
+                                <button class="btn btn-primary" type="submit">Save changes</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
 
-<a href="{% url 'get-enrolled-courses' user.id %}"><button>View Enrolled Courses</button></a>
-{% if user == request.user %}
-    <a href="{% url 'edit-profile' user.id %}"><button>Edit profile</button></a>
-{% endif %}
-
+{% block extra_js %}
+<script>
+    document.getElementById('id_profile_pic').addEventListener('change', function(event) {
+        var output = document.getElementById('profile_pic_preview');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    });
+</script>
 {% endblock %}

@@ -39,17 +39,26 @@ def course_detail(request, course_id):
     reviews = Review.objects.filter(course=course)
     review_form = ReviewForm()
     
-    # Check if the user is enrolled in the course
+    
     is_enrolled = False
+    has_reviewed = False
     if request.user.is_authenticated:
+        # Check if the user is enrolled in the course
         user_profile = request.user.userprofile
         is_enrolled = course in user_profile.enrolled_courses.all()
+    
+        # Check if the user has already reviewed the course
+        user_review = Review.objects.filter(course=course, user=request.user)
+        if user_review:
+            has_reviewed = True
+
 
     context = {
         'course': course,
         'reviews': reviews,
         'review_form': review_form,
-        'is_enrolled': is_enrolled
+        'is_enrolled': is_enrolled,
+        'has_reviewed': has_reviewed
     }
     return render(request, 'courses/course_detail.html', context)
 
@@ -61,12 +70,13 @@ def enroll_course(request, course_id):
         user_profile = UserProfile.objects.get(user=user)
         user_profile.enrolled_courses.add(course)
         user_profile.save()
-        return render(request, 'courses/course_detail.html', {'course': course, 'reviews': Review.objects.filter(course=course), 'review_form': ReviewForm()})
+        return render(request, 'courses/course_detail.html', {'course': course, 'reviews': Review.objects.filter(course=course), 'review_form': ReviewForm(), 'is_enrolled': True})
     else:
         return HttpResponse('Method not allowed')
 
 
 def review_course(request, course_id):
+    global NEW_REVIEWS_COUNT  # Declare NEW_REVIEWS_COUNT as global
     if request.method == 'POST':
         course = get_object_or_404(Course, id=course_id)
         user = get_object_or_404(User, id=request.user.id)
@@ -94,7 +104,9 @@ def review_course(request, course_id):
             'course': course, 
             'reviews': Review.objects.filter(course=course), 
             'review_form': ReviewForm(),
-            'is_retrain': is_retrain
+            'is_retrain': is_retrain,
+            'is_enrolled': True,
+            'has_reviewed': True
         })
     else:
         return HttpResponse('Method not allowed')

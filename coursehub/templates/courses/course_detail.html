@@ -121,15 +121,19 @@ textarea.form-control:focus {
     <!-- <h1>Course Details</h1>
     <div>
         <h1>{{ course.name }}</h1>
+        <img src="{{ course.image_url }}" alt="https://picsum.photos/200">
         <p>{{ course.description }}</p>
         <p>Institution: {{ course.institution}}</p>
         <p>URL: <a href="{{ course.course_url }}">{{ course.course_url }}</a></p>
+        <p>Lecturer: {{ course.lecturer }}</p>
+        <p>Level: {{ course.level }}</p>
+        <p>Study time: {{ course.study_time }}</p>
         <p>Price: {{ course.price }}</p>
         {% if user.is_authenticated %}
             {% if is_enrolled %}
                 <button disabled>You are enrolled in this course</button>
             {% else %}
-                <form action="{% url 'enter-order-info' course.id %}" method="GET">
+                <form action="{% url 'enroll-course' course.id %}" method="POST">
                     {% csrf_token %}
                     <button type="submit">Enroll</button>
                 </form>   
@@ -143,8 +147,13 @@ textarea.form-control:focus {
         <form action="{% url 'review-course' course.id %}" method="POST">
             {% csrf_token %}
             {{ review_form }}
-
-            <button type="submit" class="btn btn-primary">Submit review</button>
+            {% if not is_enrolled %}
+                <button disabled>You must be enrolled to review this course</button>
+            {% elif has_reviewed %}
+                <button disabled>You have already reviewed this course</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary">Submit review</button>
+            {% endif %}
         </form>
     </div>
     <div>

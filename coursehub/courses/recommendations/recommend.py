@@ -26,12 +26,14 @@ def get_user_recommendations(model_type, user_id):
 
 def retrain_non_personalized_model(save=False):
     print('Retraining non personalized model...')
+    non_per_model.ratings_df_path = 'courses/recommendations/rating_data.csv'
     non_per_model.fit(retrain=True)
     if save:
         non_per_model.save_model(NON_PER_PATH)
 
 def retrain_item_regression_model(save=False):
     print('Retraining item regression model...')
+    item_reg_model.ratings_df_path = 'courses/recommendations/rating_data.csv'
     item_reg_model.fit(retrain=True)
     if save:
         item_reg_model.save_model(ITEM_REG_PATH)
