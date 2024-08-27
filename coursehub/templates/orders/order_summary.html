@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
@@ -27,7 +27,7 @@
                     </div>
                     {% if order.status == 'pending' %}
                     <div class="d-grid gap-2">
-                        <a href="{% url 'verify-order-payment' order.id %}" class="btn btn-primary btn-lg">
+                        <a href="{% url 'verify-order-payment' order.id %}" class="btn btn-outline-success btn-lg">
                             <i class="fas fa-sync-alt me-2"></i>Verify Payment Status
                         </a>
                     </div>

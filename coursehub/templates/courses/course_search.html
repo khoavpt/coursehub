@@ -137,9 +137,9 @@ border-bottom-color: #0061f2;
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <form action="{% url 'course-detail' course.id %}" method="post" class="d-flex justify-content-center">
+                                    <form action="{% url 'course-detail' course.id %}" method="post" class="d-flex justify-content-center mt-3">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-primary">View details</button>
+                                        <button type="submit" class="btn btn-outline-success">View details</button>
                                     </form>
                                 </div>
                             </div><!-- end cardbody -->

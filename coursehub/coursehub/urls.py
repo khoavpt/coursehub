@@ -25,7 +25,6 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('users/', include('users.urls')),
     path('auth/', include('users.auth_urls')),
-    path('recommendations/', include('recommendations.urls')),
 ]
 
 if settings.DEBUG:

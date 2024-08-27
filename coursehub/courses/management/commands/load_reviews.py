@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Load data from reviews CSV file into the database'
 
     def handle(self, *args, **kwargs):
-        with open('recommendations/data/Coursera_reviews_sampled.csv', newline='', encoding='utf-8') as csvfile:
+        with open('data/Coursera_reviews_sampled.csv', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 try:

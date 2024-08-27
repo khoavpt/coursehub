@@ -203,7 +203,6 @@ textarea.form-control:focus {
                                 <label for="review_text" class="form-label">Your review</label>
                                 <textarea class="form-control" id="review_text" name="review_text" rows="3" required></textarea>
                             </div>
-                            {{ new_reviews_count }}
                             {% if is_enrolled %}
                                 {% if has_reviewed %}
                                     <button class="btn btn-success" disabled>You have already reviewed this course</button>

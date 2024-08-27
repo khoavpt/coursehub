@@ -17,12 +17,17 @@ class OrderForm(forms.ModelForm):
         payment_method (Select): Dropdown for selecting the payment method.
     """
 
+    PAYMENT_CHOICES = [
+        ('stripe', 'Credit Card (Stripe)'),
+        ('bank_transfer', 'Bank Transfer'),
+    ]
+
+    payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
     class Meta:
         model = Order
         fields = ['payment_method']
-        widgets = {
-            'payment_method': forms.Select(choices=PAYMENT_CHOICES)
-        }
+
 
     def clean_payment_method(self):
         """
