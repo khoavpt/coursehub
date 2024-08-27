@@ -53,24 +53,13 @@ border-bottom-color: #0061f2;
 {% endblock %}
 
 {% block content %}
-    <!-- <h1>Enrolled Course</h1>
-
-    {% for course in enrolled_courses %}
-        <h3>{{ course.name }}</h3>
-        <p>{{ course.description }}</p>
-        <p>Institution: {{ course.institution}}</p>
-        <p>URL: <a href="{{ course.course_url }}">{{ course.course_url }}</a></p>
-        <p>Price: {{ course.price }}</p>
-        <a href="{% url 'course-detail' course.id %}"><button>View Details</button></a>
-        <hr>
-    {% endfor %} -->
 
 <div id="history-page">
     <div class="container-xl p-4" >
         <!-- Account page navigation-->
         <nav class="nav nav-borders">
             <a class="nav-link " href="{% url 'get-profile' user.id %}" target="__blank">Informations</a>
-            <a class="nav-link active ms-0" href="{% url 'get-enrolled-courses' user.id %}?" target="__blank">History</a>
+            <a class="nav-link active ms-0" href="{% url 'get-enrolled-courses' user.id %}?" target="__blank">Enrolled Courses</a>
         </nav>
         <hr class="mt-0 mb-4">
         <div class="row">
