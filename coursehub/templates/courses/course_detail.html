@@ -69,6 +69,7 @@ h1 {
     color: #ffc107;
     font-size: 1.5rem;
     cursor: pointer;
+    padding-right: 10px;
 }
 
 .star-rating i {
@@ -113,7 +114,18 @@ textarea.form-control:focus {
 }
 
 .fas {
-    width: 1.5em;
+    width: 24px;
+}
+
+.fas.fa-star {
+    color: #ffc107;
+    height: 24px;
+    width: 24px;
+}
+
+.far.fa-star {
+    height: 24px;
+    width: 24px;
 }
 
 @media (max-width: 768px) {
@@ -217,7 +229,7 @@ textarea.form-control:focus {
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <p class="mb-1" style="padding-left: 5px;">{{ review.review_text }}</p>
+                                <p class="mb-1" style="padding-left: 5px; padding-right: 5px;">{{ review.review_text }}</p>
                                 <p class="review-date mb-0">{{ review.review_date }}</p>
                             </div>
                         {% endfor %}

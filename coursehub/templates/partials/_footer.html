@@ -1,0 +1,111 @@
+{% load static %}
+
+{% block extra_css %}
+
+<style>
+    .footer-container {
+        background-color: #333;
+        color: white;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fab {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .social-icons a {
+        text-decoration: none;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin: 10px;
+    }
+
+    .social-icons a i {
+        color: #333;
+        font-size: 1.8em;
+        opacity: 0.9;
+    }
+
+    .social-icons a:hover {
+        background-color: #333;
+        transition: 0.5s;
+    }
+
+    .social-icons a:hover i {
+        color: #fff;
+        transition: 0.5s;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: white;
+        margin: 0 10px;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .footer-links a:hover {
+        color: #5c95d6;
+    }
+
+    .footer-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .footer-links {
+            flex-direction: column;
+        }
+
+        .footer-links a {
+            margin: 10px 0;
+        }
+    }
+</style>
+
+{% endblock %}
+
+<div class="footer-container">
+    <div class="social-icons">
+        <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Courses</a>
+    </div>
+    <div class="footer-info">
+        <p>&copy; 2024 Course Hub. All rights reserved.</p>
+</div>
