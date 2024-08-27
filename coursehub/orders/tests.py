@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Order
 from courses.models import Course
 from unittest.mock import patch
+import stripe
 
 class OrderTestCase(TestCase):
     def setUp(self):
