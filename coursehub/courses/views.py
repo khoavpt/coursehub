@@ -4,15 +4,15 @@ from courses.models import Course, Review
 from users.models import UserProfile
 from django.contrib.auth.models import User
 from .forms import ReviewForm
-from courses.recommendations.models.non_personalized_rs import NonPersonalizedRecommenderSystem
-from courses.recommendations.models.item_regression_rs import ItemBasedRegressionRecommenderSystem1
 from courses.recommendations.recommend import get_user_recommendations, retrain_item_regression_model, retrain_non_personalized_model
+from django.core.paginator import Paginator
 
 NEW_REVIEWS_COUNT = 0
 
 def home_page(request):
     if request.user.is_authenticated:
         num_ratings = Review.objects.filter(user=request.user).count()
+        print(num_ratings)
         if num_ratings < 5:
             recommended_courses_id = get_user_recommendations(model_type='non personalized', user_id=request.user.id)
         else:
@@ -32,13 +32,24 @@ def course_search(request):
         courses = Course.objects.filter(name__icontains=query)
     else:
         courses = Course.objects.all()
-    return render(request, 'courses/course_search.html', {'courses': courses})
+    
+    paginator = Paginator(courses, 10)  # Show 10 courses per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+    }
+    
+    return render(request, 'courses/course_search.html', context)
 
 def course_detail(request, course_id):
+    global NEW_REVIEWS_COUNT  # Declare NEW_REVIEWS_COUNT as global
+
     course = get_object_or_404(Course, id=course_id)
-    reviews = Review.objects.filter(course=course)
+    reviews = Review.objects.filter(course=course)[::-1]
     review_form = ReviewForm()
-    
     
     is_enrolled = False
     has_reviewed = False
@@ -52,13 +63,13 @@ def course_detail(request, course_id):
         if user_review:
             has_reviewed = True
 
-
     context = {
         'course': course,
         'reviews': reviews,
         'review_form': review_form,
         'is_enrolled': is_enrolled,
-        'has_reviewed': has_reviewed
+        'has_reviewed': has_reviewed,
+        'new_reviews_count': NEW_REVIEWS_COUNT # Include the new reviews count in the context
     }
     return render(request, 'courses/course_detail.html', context)
 
@@ -70,13 +81,22 @@ def enroll_course(request, course_id):
         user_profile = UserProfile.objects.get(user=user)
         user_profile.enrolled_courses.add(course)
         user_profile.save()
-        return render(request, 'courses/course_detail.html', {'course': course, 'reviews': Review.objects.filter(course=course), 'review_form': ReviewForm(), 'is_enrolled': True})
+        return render(request, 'courses/course_detail.html', {'course': course, 'reviews': Review.objects.filter(course=course), 'review_form': ReviewForm(), 'is_enrolled': True, 'has_reviewed': False, 'new_reviews_count': NEW_REVIEWS_COUNT})
     else:
         return HttpResponse('Method not allowed')
 
+def unenroll_course(request, course_id):
+    if request.method == 'POST':
+        course = get_object_or_404(Course, id=course_id)
+        user = get_object_or_404(User, id=request.user.id)
+        user_profile = UserProfile.objects.get(user=user)
+        user_profile.enrolled_courses.remove(course)
+        user_profile.save()
+        return render(request, 'courses/course_detail.html', {'course': course, 'reviews': Review.objects.filter(course=course), 'review_form': ReviewForm(), 'is_enrolled': False})
+
 
 def review_course(request, course_id):
-    global NEW_REVIEWS_COUNT  # Declare NEW_REVIEWS_COUNT as global
+    global NEW_REVIEWS_COUNT 
     if request.method == 'POST':
         course = get_object_or_404(Course, id=course_id)
         user = get_object_or_404(User, id=request.user.id)
@@ -96,17 +116,18 @@ def review_course(request, course_id):
         print(NEW_REVIEWS_COUNT)
         if NEW_REVIEWS_COUNT >= 5:
             is_retrain = True
-            retrain_item_regression_model(save=False)
-            retrain_non_personalized_model(save=False)
+            retrain_item_regression_model(save=True)
+            retrain_non_personalized_model(save=True)
             NEW_REVIEWS_COUNT = 0     
 
         return render(request, 'courses/course_detail.html', {
             'course': course, 
-            'reviews': Review.objects.filter(course=course), 
+            'reviews': Review.objects.filter(course=course)[::-1], 
             'review_form': ReviewForm(),
             'is_retrain': is_retrain,
             'is_enrolled': True,
-            'has_reviewed': True
+            'has_reviewed': True,
+            'new_reviews_count': NEW_REVIEWS_COUNT  # Include the new reviews count in the context
         })
     else:
         return HttpResponse('Method not allowed')

@@ -22,9 +22,9 @@
                 </ul>
             </div>
 
-            <form class="d-flex flex-fill me-3 method="GET" action="{% url 'course-search' %}">
+            <form class="d-flex flex-fill me-3" method="GET" action="{% url 'course-search' %}">
               <input class="form-control me-2" name="query" placeholder="Search for courses...">
-              <button class="btn btn-outline-success" type="submit" style="flex-shrink: 0;">Tìm kiếm</button>
+              <button class="btn btn-outline-success" type="submit" style="flex-shrink: 0;">Search</button>
             </form>
             <!-- <form class="d-flex flex-fill me-3">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -33,7 +33,7 @@
                 {% if user.is_authenticated %}
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'imgs/avatar.png' %}" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
+                        <img src="{{ request.user.userprofile.profile_pic.url }}" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
                         <strong>{{ user.username }}</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
@@ -44,8 +44,8 @@
                     </ul>
                 </div>
                 {% else %}
-                  <a href="{% url 'login-user' %}" class="btn btn-outline-success">Đăng nhập</a>
-                  <a href="{% url 'register-user' %}" class="btn btn-primary">Đăng ký</a>
+                  <a href="{% url 'login-user' %}" class="btn btn-outline-success">Log in</a>
+                  <a href="{% url 'register-user' %}" class="btn btn-primary">Register</a>
                 {% endif %}
             </div>
         </div>        

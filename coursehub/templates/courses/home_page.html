@@ -88,15 +88,19 @@
 
 <div class="d-flex flex-column justify-content-center align-items-center overflow-hidden p-3 p-md-5 text-center" id="cover">
     <div class="col-12 col-md-5 p-lg-5 my-5" style="width: 100%;">
-        <h1 class="display-4 fw-bold">Khám phá những khóa học chất lượng</h1>
-        <p class="lead fw-normal">Nâng cao kỹ năng của bạn với các khóa học trực tuyến từ các chuyên gia hàng đầu</p>
-        <a href="#" class="btn btn-outline-success">Xem khóa học</a>
+        <h1 class="display-4 fw-bold" style="font-weight: 900;">Coursehub</h1>
+        <p class="lead fw-normal">Elevate your skills with our extensive range of online courses, curated by top industry experts. Whether you're looking to advance your career, learn a new hobby, or gain new knowledge, we have the right course for you.</p>
+        <a href="#rcm" class="btn btn-outline-success">Start now!</a>
     </div>
   </div>
 
-<section class="rcm-courses" style="overflow-x: hidden;">
+<section class="rcm-courses" style="overflow-x: hidden;" id="rcm">
     <div class="swiper-container mySwiper">
-        <h1 class="display-4 fw-bold text-center text-white", style="padding: 20px;">Các khóa học đề xuất</h1>
+        <div class="row d-flex justify-content-center my-5">
+            <h1 class="display-4 fw-bold text-center text-white" style="padding: 20px;">Recommended Courses</h1>
+            <p class="lead text-center text-white" style="padding: 0 20px;">Our recommended courses are personalized to provide you with the best learning experience. These courses are designed to help you achieve your goals and excel in your chosen field.</p>
+            <a href="{% url 'course-search' %}" class="btn btn-outline-light" style="width: auto;">Explore Courses</a>
+        </div>
         
         <div class="swiper-wrapper">
 
@@ -124,41 +128,40 @@
         <div class="swiper-pagination"></div>
     </div>
 </section>
-
-
-    {% block extra_js %}
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 4,
-            spaceBetween: 10,
-            loop: true,
-            centerSlide: 'true',
-            fade: 'true',
-            grabCursor: 'true',
-            pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-            dynamicBullets: true,
-            },
-            navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-            },
-            breakpoints:{
-                0: {
-                    slidesPerView: 2,
-                },
-                520: {
-                    slidesPerView: 3,
-                },
-                950: {
-                    slidesPerView: 4,
-                },
-            },
-        });
-    </script>
-    {% endblock %}
-
 {% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        loop: true,
+        centerSlide: 'true',
+        fade: 'true',
+        grabCursor: 'true',
+        pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+        },
+        navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+        },
+        breakpoints:{
+            0: {
+                slidesPerView: 2,
+            },
+            520: {
+                slidesPerView: 3,
+            },
+            950: {
+                slidesPerView: 4,
+            },
+        },
+    });
+</script>
+{% endblock %}
+

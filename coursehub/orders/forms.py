@@ -2,9 +2,8 @@ from django import forms
 from .models import Order
 
 PAYMENT_CHOICES = [
-    ('credit_card', 'Credit Card'),
-    ('paypal', 'PayPal'),
-    ('bank_transfer', 'Bank Transfer')
+    ('stripe', 'Credit Card (Stripe)'),
+    ('bank_transfer', 'Bank Transfer'),
 ]
 
 class OrderForm(forms.ModelForm):
@@ -13,6 +12,9 @@ class OrderForm(forms.ModelForm):
 
     This form allows users to select a payment method when placing an order.
     It includes validation to ensure that the payment method is not left blank.
+
+    Attributes:
+        payment_method (Select): Dropdown for selecting the payment method.
     """
 
     class Meta:
@@ -24,9 +26,15 @@ class OrderForm(forms.ModelForm):
 
     def clean_payment_method(self):
         """
-        Validates the payment method field.
+        Validate the payment method field.
 
-        Raises a ValidationError if the payment method is not provided.
+        This method checks if a payment method has been selected.
+
+        Returns:
+            str: The selected payment method.
+
+        Raises:
+            ValidationError: If no payment method is selected.
         """
         payment_method = self.cleaned_data['payment_method']
         if not payment_method:

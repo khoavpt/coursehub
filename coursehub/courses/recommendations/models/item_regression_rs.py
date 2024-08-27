@@ -199,6 +199,7 @@ class ItemBasedRegressionRecommenderSystem1(MemoryBasedRecommenderSystem):
         if retrain and self.model is not None:
             print('retraining model')
             # Initialize a new model but pass the old model to transfer parameters
+            self.epochs = 10
             new_model = ItemRegressionModel(self.rating_matrix, self.qtus, self.neighborhood_size, previous_model=self.model)
             self.model = new_model
         else:

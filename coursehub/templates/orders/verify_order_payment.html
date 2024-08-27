@@ -1,7 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Verify Order Payment</h1>
+<h2>Payment Verification</h2>
 
+<h3>Order Information</h3>
+<p>Order ID: {{ order.id }}</p>
+<p>Course: {{ order.course.name }}</p>
+<p>Total Amount: {{ order.total_amount }}</p>
+<p>Payment Method: {{ order.get_payment_method_display }}</p>
+<p>Status: {{ order.get_status_display }}</p>
+
+<!-- {% if error_message %}
+    <div class="alert alert-danger">
+        {{ error_message }}
+    </div>
+{% endif %} -->
+
+{% if order.payment_method == 'stripe' %}
+    <p>Stripe payment verification in progress...</p>
+    <a href="{% url 'process_stripe_payment' order.id %}" class="btn btn-primary">Retry Payment</a>
+{% elif order.payment_method == 'bank_transfer' %}
+    <p>Bank transfer payment is pending confirmation.</p>
+    <p>Please transfer the amount to the following account details:</p>
+    <ul>
+        <li>Account Number: XXXXXXXX</li>
+        <li>Account Name: YYYYYYYY</li>
+        <li>Bank: ZZZZZZZZ</li>
+        <li>Transfer Description: Payment for Order {{ order.id }}</li>
+    </ul>
+    <p>After transferring the amount, please contact us for confirmation.</p>
+{% endif %}
+
+<form action="{% url 'get-order-summary' order.id %}" method="get">
+    <button type="submit" class="btn btn-outline-primary">Back to Order Summary</button>
+</form>
+<form action="{% url 'enroll-course' order.course.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-primary">Confirm Payment</button>
+</form>
 
 {% endblock %}

@@ -36,7 +36,7 @@ def edit_profile(request, user_id):
         user = get_object_or_404(User, id=user_id)
         user_profile = get_object_or_404(UserProfile, user=user)
         user_form = UserForm(request.POST, instance=user)
-        user_profile_form = UserProfileForm(request.POST, instance=user_profile)
+        user_profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if user_form.is_valid() and user_profile_form.is_valid():
             user_form.save()
             user_profile_form.save()
