@@ -1,8 +1,21 @@
 {% load static %}
 
 {% block extra_css %}
-
 <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+    }
+
     .footer-container {
         background-color: #333;
         color: white;
@@ -11,6 +24,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        margin-top: auto; /* Ensure footer is pushed to the bottom */
     }
 
     .social-icons {
@@ -26,7 +40,6 @@
         justify-content: center;
         align-items: center;
     }
-
 
     .social-icons a {
         text-decoration: none;
@@ -89,7 +102,6 @@
         }
     }
 </style>
-
 {% endblock %}
 
 <div class="footer-container">
@@ -108,4 +120,5 @@
     </div>
     <div class="footer-info">
         <p>&copy; 2024 Course Hub. All rights reserved.</p>
+    </div>
 </div>
