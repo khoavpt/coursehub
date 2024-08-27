@@ -129,9 +129,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     "static/",
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -142,3 +144,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Stripe API Key
 STRIPE_SECRET_KEY = 'sk_test_51Pq7A4I783hGdSieEZlzbCtsYyBWZGWawuVaIHL9MD7jfFJPVqkxy6ufoJYSu2lxdna96wF6XVpVJKvv5gOroLqP00eJzEBZ7s'
 STRIPE_PUBLIC_KEY = 'pk_test_51Pq7A4I783hGdSieKAjhlySlONhWxVqILrGMJno5g7KxJeiQJ3hNWZBnZvH9QG7WXwSPWdBe2YvBOi3W8qGZ91RQ00g16sLrzw'
+
+
+HOST_URL = os.environ.get('HOST_URL', 'http://localhost:8000')

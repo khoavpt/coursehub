@@ -65,7 +65,6 @@ border-bottom-color: #0061f2;
         <hr>
     {% endfor %} -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div id="history-page">
     <div class="container-xl p-4" >
         <!-- Account page navigation-->
@@ -121,7 +120,13 @@ border-bottom-color: #0061f2;
                                                 <div class="flex-grow-1 align-items-start">
                                                     <div>
                                                         <h6 class="mb-0 text-muted">
-                                                            <i class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
+                                                            {% if course.level == 'Beginner level' %}
+                                                                <i class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
+                                                            {% elif course.level == 'Intermediate level' %}
+                                                                <i class="mdi mdi-circle-medium text-warning fs-3 align-middle"></i>
+                                                            {% else %}
+                                                                <i class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
+                                                            {% endif %}
 
                                                             <span class="team-date">{{ course.level }}</span>
                                                         </h6>
@@ -139,9 +144,11 @@ border-bottom-color: #0061f2;
     
                                                         <div class="dropdown-divider"></div>
                                                         <div class="dropdown-item">
-                                                            <button class="btn btn-outline-danger" style="width: 100%;">Delete</button>
+                                                            <form action="{% url 'unenroll-course' course.id %}" method="post">
+                                                                {% csrf_token %}
+                                                                <button type="submit" class="btn btn-outline-danger" style="width: 100%;">Unenroll</button>
+                                                            </form>                                                        
                                                         </div>
-    
                                                     </div>
                                                 </div>
                                             </div>

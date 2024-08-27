@@ -1,15 +1,40 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>Order Summary</h1>
-
-    <p>{{ order.course.name }}</p>
-    <p>{{ order.created_at }}</p>
-    <p>{{ order.updated_at }}</p>
-    <p>{{ order.status }}</p>
-    <p>{{ order.payment_method }}</p>
-    <p>{{ order.total_amout }}</p>
-    <p>{{ order.order_number }}</p>
-
-    <a href="{% url 'course-detail' order.course.id %}"><button>Back to Course details</button></a>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Order Summary</h2>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <img src="{{ order.course.image_url }}" alt="{{ order.course.name }}" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-8">
+                            <h3>{{ order.course.name }}</h3>
+                            <p class="text-muted">{{ order.course.institution }}</p>
+                            <p class="fs-4"><strong>Price:</strong> ${{ order.total_amount }}</p>
+                            <p><strong>Order Status:</strong> 
+                                <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'pending' %}bg-warning{% else %}bg-danger{% endif %}">
+                                    {{ order.status|title }}
+                                </span>
+                            </p>
+                            <p><strong>Payment Method:</strong> {{ order.payment_method|title }}</p>
+                            <p><strong>Order Date:</strong> {{ order.created_at|date:"F d, Y H:i" }}</p>
+                        </div>
+                    </div>
+                    {% if order.status == 'pending' %}
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'verify-order-payment' order.id %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sync-alt me-2"></i>Verify Payment Status
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
