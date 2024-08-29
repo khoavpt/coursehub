@@ -113,7 +113,7 @@ This web application is developed to offer personalized online course recommenda
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Report and demo video:
-[Group91-IWC-Drive]([https://drive.google.com/drive/folders/1YgZCqFx44DWOMdophT5vXYoi794CH7MB?usp=drive_link](https://drive.google.com/drive/folders/1opCvR4lItD9Jt5jryRVnXmz1YUzRaSzJ?usp=sharing)
+[Demo][https://drive.google.com/drive/folders/1YgZCqFx44DWOMdophT5vXYoi794CH7MB?usp=drive_link](https://drive.google.com/drive/folders/1opCvR4lItD9Jt5jryRVnXmz1YUzRaSzJ?usp=sharing)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
