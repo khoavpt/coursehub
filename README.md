@@ -147,7 +147,7 @@ pip install -r requirements.txt
 ```
 3. Navigate to the project directory
 ```
-cd ielts_checker
+cd coursehub
 ```
 4. Run the Django server
 ```
@@ -163,11 +163,11 @@ git clone
 ```
 3. Build the Docker image
 ```
-docker build -t ielts_checker .
+docker-compose build
 ```
 4. Run the Docker container
 ```
-docker run -p 8000:8000 ielts_checker
+docker-compose up
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
