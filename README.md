@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/hieuhn09/IELTS-Writing-Checker">
+  <a href="https://github.com/khoavpt/coursehub">
     <img src="Images/logo.png" alt="Logo" width="400" height="400">
   </a>
 
@@ -38,14 +38,14 @@
   <p align="center">
     CourseHub is an online platform that allows users to search, enroll, and manage courses with personalized recommendations.
     <br />
-    <a href="https://github.com/hieuhn09/IELTS-Writing-Checker"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/khoavpt/coursehub"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/hieuhn09/IELTS-Writing-Checker">View Demo</a>
+    <a href="https://github.com/khoavpt/coursehub">View Demo</a>
     ·
-    <a href="https://github.com/hieuhn09/IELTS-Writing-Checker/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/khoavpt/coursehub/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/hieuhn09/IELTS-Writing-Checker/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/khoavpt/coursehub/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
