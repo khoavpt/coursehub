@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/khoavpt/coursehub">
-    <img src="Images/logo.png" alt="Logo" width="400" height="400">
+    <img src="coursehub/static/imgs/logo.png" alt="Logo" width="300" height="300">
   </a>
 
 <h1 align="center">CourseHub</h1>
@@ -63,7 +63,6 @@
     <li>
       <a href="#getting-started">Getting Started</a>
     </li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -71,10 +70,9 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## Introduction
 
-<img src="Images/Screenshot.png" alt="Logo">
+<img src="coursehub/static/imgs/preview.png" alt="Logo">
 
 This web application is developed to offer personalized online course recommendations. Using AI, it tailors suggestions based on user behavior and preferences, helping you find the perfect courses to match your learning goals.
 
@@ -82,35 +80,14 @@ This web application is developed to offer personalized online course recommenda
 
 ### Features
 
-- **User-Friendly Interface**
-  - Easily search and purchase courses tailored to individual needs.
-  - Convenient and effective learning experience.
-  - Receive personalized course recommendations based on preferences.
-  - Rate and comment on courses.
-  - Secure and convenient payment options.
-
-- **Admin Management**
-  - Manage users (view, edit, delete accounts).
-  - Oversee course content (add, edit, delete, approve courses).
-  - Handle transactions and generate financial reports.
-
-- **Payment System**
-  - Integrated with multiple payment methods (credit card, bank transfer, e-wallet).
-  - Secure and fast transaction processing.
-  - Provides APIs for seamless integration with the main system.
-  - Supports refunds and dispute resolution.
-  - Detailed transaction reporting.
-  - Compliance with payment security regulations.
-
-- **Recommendation System**
-  - Collects and analyzes user data (viewing history, purchases, course reviews).
-  - Builds and updates AI-based recommendation models.
-  - Offers tailored course suggestions for each user.
-  - Optimizes recommendation performance (response time, accuracy).
-  - Integrates with the main system through APIs.
-  - Provides reports and analysis on the recommendation system's effectiveness.
+- Developed a scalable backend using Django to handle user authentication, course management, and personalized recommendations.
+- Implemented Item-based Regression and Non-personalized recommendation models using PyTorch for accurate course suggestions.
+- Managed user data, transactions, and course details efficiently using MariaDB.
+- Integrated secure payment processing with Stripe API, supporting multiple payment methods and generating detailed transaction reports.
+- Deployed the platform using Docker for consistent performance across environments.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ### Report and demo video:
 [Demo][https://drive.google.com/drive/folders/1YgZCqFx44DWOMdophT5vXYoi794CH7MB?usp=drive_link](https://drive.google.com/drive/folders/1opCvR4lItD9Jt5jryRVnXmz1YUzRaSzJ?usp=sharing)
@@ -171,20 +148,6 @@ docker-compose up
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-See `CONTRIBUTING.md` for more information.
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->
